@@ -1,9 +1,3 @@
-# azure-pipelines.yml
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
 # Simple pipeline to archive and publish an HTML website
 
 trigger:
@@ -14,12 +8,14 @@ pool:
 
 steps:
 - task: CopyFiles@2
+  displayName: 'Copy website files to artifact staging directory'
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: ArchiveFiles@2
+  displayName: 'Archive website files into a ZIP'
   inputs:
     rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
     includeRootFolder: false
@@ -27,6 +23,7 @@ steps:
     replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish website artifact'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'

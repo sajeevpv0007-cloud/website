@@ -1,4 +1,9 @@
 # azure-pipelines.yml
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
 # Simple pipeline to archive and publish an HTML website
 
 trigger:
